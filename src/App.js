@@ -34,6 +34,7 @@ function App() {
       <h1>To Do List</h1>
       <div className="todo-input-box">
         <input
+          className="input-box"
           type="text"
           placeholder="내용을 입력하세요."
           value={newTodo}
