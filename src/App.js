@@ -2,12 +2,12 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [todos, setTodos] = useState("");
-
-  const addTodo = (text) => {
-    const newTodo = [...todos];
-    setTodos(newTodo);
-  };
+  const [todos, setTodos] = useState([
+    "산책하기",
+    "밥먹기",
+    "공부하기",
+    "잠 자기",
+  ]);
 
   return (
     <div className="App">
@@ -16,26 +16,16 @@ function App() {
         <input type="text" placeholder="내용을 입력하세요." />
         <button className="todo-input-button">+</button>
       </div>
-      <div className="newTodo">
+      <div className="todo-list">
         <ul>
-          <li>
-            <input className="newTodo-checkbox" type="checkbox" />
-            <span className="newTodo-input-box">콩이 산책</span>
-            <button className="insert-button">수정</button>
-            <button className="delete-button">지우기</button>
-          </li>
-          <li>
-            <input className="newTodo-checkbox" type="checkbox" />
-            <span className="newTodo-input-box">밥 먹기</span>
-            <button className="insert-button">수정</button>
-            <button className="delete-button">지우기</button>
-          </li>
-          <li>
-            <input className="newTodo-checkbox" type="checkbox" />
-            <span className="newTodo-input-box">공부 하기</span>
-            <button className="insert-button">수정</button>
-            <button className="delete-button">지우기</button>
-          </li>
+          {todos.map((todo) => (
+            <li>
+              <input className="todo-item-checkbox" type="checkbox" />
+              <span className="todo-item-text">{todo}</span>
+              <button className="insert-button">수정</button>
+              <button className="delete-button">지우기</button>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
