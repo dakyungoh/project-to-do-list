@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 function App() {
   const [newTodo, setNewTodo] = useState("");
   const [todos, setTodos] = useState([
@@ -68,7 +69,7 @@ function App() {
                   onClickDeleteButton(index);
                 }}
               >
-                지우기
+                <FontAwesomeIcon icon={faTrashCan} />
               </button>
             </li>
           ))}
