@@ -4,7 +4,13 @@
 }
 
 body {
+  padding: 0;
+  margin: 0;
+}
+
+.App {
   background-color: #ffffe8;
+  min-height: 100vh;
 }
 
 ul {
@@ -28,6 +34,7 @@ li {
 h1 {
   text-align: center;
   padding-top: 30px;
+  margin: 0;
 }
 
 .todo-input-box {
@@ -77,4 +84,9 @@ h1 {
   border: none;
   color: #f94a29;
   cursor: pointer;
+}
+
+.darkmode {
+  background-color: #222;
+  color: white;
 }
