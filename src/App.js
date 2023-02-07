@@ -1,16 +1,31 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 function App() {
+  const [isDarkmode, setIsDarkmode] = useState(true);
   const [newTodo, setNewTodo] = useState("");
-  const [todos, setTodos] = useState([
-    "산책하기",
-    "밥먹기",
-    "공부하기",
-    "잠 자기",
-  ]);
-  const [isChecked, setIsChecked] = useState([false, false, false, false]);
+  const [todos, setTodos] = useState(
+    window.localStorage.getItem("todos").split(",")
+  );
+  const [isChecked, setIsChecked] = useState(
+    window.localStorage
+      .getItem("checked")
+      .split(",")
+      .map((item) => item === "true")
+  );
+
+  useEffect(() => {
+    window.localStorage.setItem("todos", todos);
+  }, [todos]);
+
+  useEffect(() => {
+    window.localStorage.setItem("checked", isChecked);
+  }, [isChecked]);
+
+  function changeDisplayMode() {
+    setIsDarkmode(!isDarkmode);
+  }
 
   function onClickAddButton() {
     setTodos([...todos, newTodo]);
@@ -22,6 +37,9 @@ function App() {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
+    const newIsChecked = [...isChecked];
+    newIsChecked.splice(index, 1);
+    setIsChecked(newIsChecked);
   }
 
   function checkboxButton(event, index) {
@@ -31,7 +49,8 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={`App ${isDarkmode && "darkmode"}`}>
+      <span onClick={changeDisplayMode}>{isDarkmode ? "🌞" : "🌝"}</span>
       <h1>To Do List</h1>
       <div className="todo-input-box">
         <input
@@ -47,6 +66,7 @@ function App() {
           +
         </button>
       </div>
+      {`Total : ${todos.length}`}
       <div className="todo-list">
         <ul>
           {todos.map((todo, index) => (
