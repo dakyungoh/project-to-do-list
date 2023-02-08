@@ -50,7 +50,9 @@ function App() {
 
   return (
     <div className={`App ${isDarkmode && "darkmode"}`}>
-      <span onClick={changeDisplayMode}>{isDarkmode ? "🌞" : "🌝"}</span>
+      <span className="darkmode-button" onClick={changeDisplayMode}>
+        {isDarkmode ? "🌞" : "🌝"}
+      </span>
       <h1>To Do List</h1>
       <div className="todo-input-box">
         <input
@@ -66,7 +68,7 @@ function App() {
           +
         </button>
       </div>
-      {`Total : ${todos.length}`}
+      <p className="totalCount">{`Total : ${todos.length}`}</p>
       <div className="todo-list">
         <ul>
           {todos.map((todo, index) => (
