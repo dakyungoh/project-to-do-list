@@ -5,15 +5,18 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 function App() {
   const [isDarkmode, setIsDarkmode] = useState(true);
   const [newTodo, setNewTodo] = useState("");
-  const [todos, setTodos] = useState(
-    window.localStorage.getItem("todos").split(",")
-  );
-  const [isChecked, setIsChecked] = useState(
-    window.localStorage
-      .getItem("checked")
-      .split(",")
-      .map((item) => item === "true")
-  );
+
+  const storageTodoItemString = window.localStorage.getItem("todos");
+  const storageTodoItems = storageTodoItemString
+    ? storageTodoItemString.split(",")
+    : [];
+  const [todos, setTodos] = useState(storageTodoItems);
+
+  const storageIsCheckedString = window.localStorage.getItem("checked");
+  const storageIsChecked = storageIsCheckedString
+    ? storageIsCheckedString.split(",").map((item) => item === "true")
+    : [];
+  const [isChecked, setIsChecked] = useState(storageIsChecked);
 
   useEffect(() => {
     window.localStorage.setItem("todos", todos);
