@@ -14,17 +14,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "homepage" :"https://dakyungoh.github.io/project-to-do-list/"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "build:staging": "env-cmd -f .env.staging npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
