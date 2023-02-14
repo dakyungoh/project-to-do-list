@@ -61,7 +61,7 @@ function App() {
         <input
           className="input-box"
           type="text"
-          placeholder="내용을 입력하세요."
+          placeholder="할 일을 입력하세요."
           value={newTodo}
           onChange={(event) => {
             setNewTodo(event.target.value);
