@@ -4,51 +4,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 function App() {
   const [isDarkmode, setIsDarkmode] = useState(true);
-  const [newTodo, setNewTodo] = useState("");
-
-  const storageTodoItemString = window.localStorage.getItem("todos");
-  const storageTodoItems = storageTodoItemString
-    ? storageTodoItemString.split(",")
+  const [newTodoText, setNewTodoText] = useState("");
+  const storageTodoItemString = window.localStorage.getItem("todoItems");
+  const storageTodoItem = storageTodoItemString
+    ? JSON.parse(storageTodoItemString)
     : [];
-  const [todos, setTodos] = useState(storageTodoItems);
-
-  const storageIsCheckedString = window.localStorage.getItem("checked");
-  const storageIsChecked = storageIsCheckedString
-    ? storageIsCheckedString.split(",").map((item) => item === "true")
-    : [];
-  const [isChecked, setIsChecked] = useState(storageIsChecked);
+  const [todoItems, setTodoItems] = useState(storageTodoItem);
 
   useEffect(() => {
-    window.localStorage.setItem("todos", todos);
-  }, [todos]);
-
-  useEffect(() => {
-    window.localStorage.setItem("checked", isChecked);
-  }, [isChecked]);
+    window.localStorage.setItem("todoItems", JSON.stringify(todoItems));
+  }, [todoItems]);
 
   function changeDisplayMode() {
     setIsDarkmode(!isDarkmode);
   }
 
   function onClickAddButton() {
-    setTodos([...todos, newTodo]);
-    setIsChecked([...isChecked, false]);
-    setNewTodo("");
+    setTodoItems([...todoItems, { name: newTodoText, isChecked: false }]);
+    setNewTodoText("");
   }
 
   function onClickDeleteButton(index) {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
-    const newIsChecked = [...isChecked];
-    newIsChecked.splice(index, 1);
-    setIsChecked(newIsChecked);
+    const nextTodoItems = [...todoItems];
+    nextTodoItems.splice(index, 1);
+    setTodoItems(nextTodoItems);
   }
 
-  function checkboxButton(event, index) {
-    const newIsChecked = [...isChecked];
-    newIsChecked[index] = event.target.checked;
-    setIsChecked(newIsChecked);
+  function onClickCheckboxButton(index) {
+    const nextTodoItems = [...todoItems];
+    nextTodoItems[index].isChecked = !nextTodoItems[index].isChecked;
+    setTodoItems(nextTodoItems);
   }
 
   return (
@@ -62,30 +47,32 @@ function App() {
           className="input-box"
           type="text"
           placeholder="할 일을 입력하세요."
-          value={newTodo}
+          value={newTodoText}
           onChange={(event) => {
-            setNewTodo(event.target.value);
+            setNewTodoText(event.target.value);
           }}
         />
         <button className="todo-input-button" onClick={onClickAddButton}>
           +
         </button>
       </div>
-      <p className="totalCount">{`Total : ${todos.length}`}</p>
+      <p className="totalCount">{`Total : ${todoItems.length}`}</p>
       <div className="todo-list">
         <ul>
-          {todos.map((todo, index) => (
+          {todoItems.map((todoItem, index) => (
             <li key={index}>
               <input
                 className="todo-item-checkbox"
                 type="checkbox"
-                checked={isChecked[index]}
-                onClick={(event) => checkboxButton(event, index)}
+                checked={todoItem.isChecked}
+                onClick={() => onClickCheckboxButton(index)}
               />
-              {isChecked[index] === false ? (
-                <span className="todo-item-text">{todo}</span>
+              {todoItem.isChecked === false ? (
+                <span className="todo-item-text">{todoItem.name}</span>
               ) : (
-                <span className="todo-item-text-line-through">{todo}</span>
+                <span className="todo-item-text-line-through">
+                  {todoItem.name}
+                </span>
               )}
 
               <button
